@@ -1,55 +1,34 @@
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.termguicolors = true
+#include <iostream>
+using namespace std;
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git", "clone", "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+int main() {
+    double fiyatsade = 10;
+    double fiyatkepekli = 12.5;
+    double fiyatbugdayli = 15;
 
-require("lazy").setup("plugins")
+    int adetsade, adetkepekli, adetbugdayli;
+    double toplamfiyat;
 
-vim.cmd.colorscheme("catppuccin")
+    cout << "Sade ekmek adedi: ";
+    cin >> adetsade;
 
-require("nvim-treesitter.configs").setup({
-  ensure_installed = { "cpp", "c", "lua", "python" },
-  highlight = { enable = true },
-})
+    cout << "Kepekli ekmek adedi: ";
+    cin >> adetkepekli;
 
-require("mason").setup()
-require("mason-lspconfig").setup({
-  ensure_installed = { "clangd" },
-})
+    cout << "Tam bugdayli ekmek adedi: ";
+    cin >> adetbugdayli;
 
-local lspconfig = require("lspconfig")
-lspconfig.clangd.setup({})
+    toplamfiyat = (adetsade * fiyatsade) +
+                  (adetkepekli * fiyatkepekli) +
+                  (adetbugdayli * fiyatbugdayli);
 
-local cmp = require("cmp")
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      require("luasnip").lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({
-    ["<Tab>"] = cmp.mapping.select_next_item(),
-    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = {
-    { name = "nvim_lsp" },
-  },
-})
+    if (toplamfiyat > 100) {
+        double indirim = toplamfiyat * 0.15;
+        toplamfiyat = toplamfiyat - indirim;
+        cout << " %15 indirim uygulandi!\n";
+    }
 
-require("nvim-tree").setup()
-vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
+    cout << "Odenecek toplam tutar: " << toplamfiyat << " TL" << endl;
 
-require("lualine").setup()
+    return 0;
+}
